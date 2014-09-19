@@ -1,0 +1,9 @@
+{
+  "name": "UU-JS",
+  "version": "0.0.1",
+  "author": "Unblock-us",
+  "license": "MIT",
+  "dependencies": {
+    "requirejs": "^2.1.15"
+  }
+}
