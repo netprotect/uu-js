@@ -1,3 +1,5 @@
 define(function () {
-  return '0.0.1'; 
+  'use strict';
+  
+  return '0.0.12'; 
 });
