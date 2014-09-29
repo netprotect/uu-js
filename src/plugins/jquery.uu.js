@@ -10,7 +10,7 @@
         'getStatus': 'http://check.unblock-us.com/get-status.js',
         'setTrial': 'http://realcheck2.unblock-us.com/startTrialNew.php',
         'setCountry': 'http://realcheck.unblock-us.com/set-country.php',
-        'setCaption': 'http://check.unblock-us.com/set-captions'
+        'setCaptions': 'http://check.unblock-us.com/set-captions'
       },
       timeout: 3000, // Milliseconds
       retry: 3 // How many times should retry if timeout
@@ -20,6 +20,9 @@
         subscribeEvent, 
         unsubscribeEvent, 
         publishEvent,
+        country,
+        captions,
+        cache = null,
         handlers = {};
     
     plugin.settings = {};
@@ -31,18 +34,12 @@
       return 'http://c' + Math.floor(( Math.random() * 1000000) + 1) + '.check.unblock-us.com/get-status.js';
     }
 
-    function _serverCall(email) {
-
-      // @todo: make email mandatory 
-      email = email || '1@2.ca';
-      
-      console.log('Getting status for: ' + email);
-      
+    function _getStatus(args) {
       var call;
-
+      
       call = $.ajax({
         url: _generateServerUrl(),
-        data: { 'email': email || '1@2.ca' },
+        data: args,
         dataType: "jsonp",
         cache: false,
         async: true,
@@ -62,11 +59,11 @@
           console.log('Ajax call was successful');
           console.log('Server response: ' + JSON.stringify(data));
           publishEvent('onSuccess', [data]);
+          cache = data;
         },
 
         always: function() {
           console.log('Ajax call ended');
-          setTimeout(function() { $("#loading").fadeOut(); }, 500);     
         },
         
         error: function (xhr, status, error) {
@@ -79,6 +76,31 @@
               $.ajax(this);
             }
           }
+        }
+
+      });
+      
+      return call;
+    }    
+    
+    function _setStatus(args, url) {
+      var call;
+      
+      call = $.ajax({
+        url: url,
+        data: args,
+        dataType: "jsonp",
+        
+        beforeSend: function(xhr, opts) {
+          publishEvent('onStart', []);
+        },
+        
+        success: function(data) {
+          publishEvent('onSuccess', [data]);
+        },
+
+        error: function (xhr, status, error) {
+          publishEvent('onFail', [xhr, status, error]); 
         }
 
       });
@@ -137,19 +159,41 @@
       });
       return true;
     };
-
+    
+    country = function() {
+      if (arguments.length === 0) { 
+        return cache.country;
+      } else {
+        _setStatus({ country: String(arguments[0]).toUpperCase() }, plugin.settings.urls.setCountry);
+      } 
+    };
+    
+    captions = function() {
+      if (arguments.length === 0) { 
+        return (cache.cc_disabled) ? false : true;
+      } else {
+        _setStatus({ cc_disabled: !Boolean(arguments[0]) }, plugin.settings.urls.setCaptions);
+      } 
+    };
+    
     var _init = function () {
       plugin.settings = $.extend({}, defaults, options);
     };
     _init(); 
     
     return {
+      
+      // Subscribe and publish
       subscribe : subscribeEvent,
       unsubscribe : unsubscribeEvent,
       publish : publishEvent,
-      handlers: handlers,
-      callServer: _serverCall
+      
+      // Setters and getters
+      status: _getStatus,
+      country: country,
+      captions: captions
+      
     };
   };
 
-})($);  
+})($);

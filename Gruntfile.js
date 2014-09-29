@@ -22,6 +22,14 @@ module.exports = function (grunt) {
         }
       }
     },
+    
+    uglify: {
+      dev: {
+        files: {
+          'dev/uu.min.js': ['dev/uu.js']
+        }
+      }
+    },
         
     watch: {
       scripts: {
@@ -34,9 +42,10 @@ module.exports = function (grunt) {
   
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   
   // Default
-  grunt.registerTask('default', ['jshint', 'requirejs', 'watch']);
+  grunt.registerTask('default', ['jshint', 'requirejs', 'uglify', 'watch']);
    
 };
