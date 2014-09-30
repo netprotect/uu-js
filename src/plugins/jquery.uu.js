@@ -83,7 +83,11 @@
       return call;
     }    
     
-    function _setStatus(args, url) {
+    function _refresh() {
+      return (cache) ? _getStatus(cache.country) : false; 
+    }
+    
+    function _setStatus(args, url, callback) {
       var call;
       
       call = $.ajax({
@@ -97,6 +101,7 @@
         
         success: function(data) {
           publishEvent('onSuccess', [data]);
+          callback();
         },
 
         error: function (xhr, status, error) {
@@ -190,6 +195,7 @@
       
       // Setters and getters
       status: _getStatus,
+      refresh: _refresh,
       country: country,
       captions: captions
       
