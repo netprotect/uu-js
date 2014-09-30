@@ -8,7 +8,6 @@
     var defaults = {
       urls: { // Default URLs
         'getStatus': 'http://check.unblock-us.com/get-status.js',
-        'setTrial': 'http://realcheck2.unblock-us.com/startTrialNew.php',
         'setCountry': 'http://realcheck.unblock-us.com/set-country.php',
         'setCaptions': 'http://check.unblock-us.com/set-captions'
       },
