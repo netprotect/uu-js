@@ -57,7 +57,7 @@
         },
         
         success: function(data) {
-          console.log('Server response: ' + JSON.stringify(data));
+          console.log('Server response (GET): ' + JSON.stringify(data));
           publishEvent('onSuccess', [data]);
           cache = data;
         },
@@ -97,11 +97,12 @@
         },
 
         success: function(data) {
+          console.log('Server response (SET): ' + JSON.stringify(data));
           publishEvent('onSuccess', [data]);
           if (typeof callback === "function") {
             callback();
           }
-          cache = data;
+          _getStatus(); // Refresh the cache
         },
 
         error: function (xhr, status, error) {
