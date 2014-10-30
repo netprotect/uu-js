@@ -1,3 +1,5 @@
+/* jslint vars: true, plusplus: true, devel: true */ 
+
 ;(function ($) {
   'use strict';
   
@@ -6,8 +8,8 @@
   $.UUJS = function (options) {
 
     var defaults = {
-      urls: { // Default URLs
-        'getStatus': 'http://check.unblock-us.com/get-status.js',
+      urls: { // API URLs
+        'getStatus': 'http://check.netprotect.com/get-status.js',
         'setCountry': 'http://realcheck.unblock-us.com/set-country.php',
         'setCaptions': 'http://check.unblock-us.com/set-captions'
       },
@@ -21,16 +23,20 @@
         publishEvent,
         country,
         captions,
+        ip,
         cache = null,
         handlers = {};
     
     plugin.settings = {};
     
     function _generateServerUrl() {
-      if (location.protocol === 'https:') { 
-        return 'https://check.unblock-us.com/get-status.js'; 
-      }
-      return 'http://c' + Math.floor(( Math.random() * 1000000) + 1) + '.check.unblock-us.com/get-status.js';
+      var url = plugin.settings.urls.getStatus;
+      var cacheIndex = 7;
+
+      if (location.protocol === 'https:') {
+        return url.replace(/^http:\/\//i, 'https://');
+      } 
+      return url.slice(0, cacheIndex) + "c" + Math.floor(( Math.random() * 1000000) + 1) + "." + url.slice(cacheIndex);
     }
 
     function _getStatus(args) {
@@ -41,21 +47,16 @@
         data: args,
         dataType: "jsonp",
         cache: false,
-        async: true,
+        async: false,
         timeout: plugin.settings.timeout,
         tryCount: 0,
         retryLimit: plugin.settings.retry,
         
         beforeSend: function(xhr, opts) {
-          console.log('Ajax call started');
           publishEvent('onStart', []);
-          // @todo: remove this
-          $('.sc').html('&nbsp');
-          $("#loading").fadeIn();          
         },
         
         success: function(data) {
-          console.log('Ajax call was successful');
           console.log('Server response: ' + JSON.stringify(data));
           publishEvent('onSuccess', [data]);
           cache = data;
@@ -82,25 +83,25 @@
       return call;
     }    
     
-    function _refresh() {
-      return (cache) ? _getStatus(cache.country) : false; 
-    }
-    
     function _setStatus(args, url, callback) {
       var call;
       
       call = $.ajax({
         url: url,
         data: args,
+        async: false,
         dataType: "jsonp",
         
         beforeSend: function(xhr, opts) {
           publishEvent('onStart', []);
         },
-        
+
         success: function(data) {
           publishEvent('onSuccess', [data]);
-          callback();
+          if (typeof callback === "function") {
+            callback();
+          }
+          cache = data;
         },
 
         error: function (xhr, status, error) {
@@ -110,8 +111,8 @@
       });
       
       return call;
-    }    
-
+    }
+    
     /* 
      * Subscribe an event handler
      */
@@ -166,17 +167,25 @@
     
     country = function() {
       if (arguments.length === 0) { 
-        return cache.country;
+        return cache.current;
       } else {
-        _setStatus({ country: String(arguments[0]).toUpperCase() }, plugin.settings.urls.setCountry);
+        _setStatus({ code: String(arguments[0]).toUpperCase() }, plugin.settings.urls.setCountry);
       } 
     };
     
     captions = function() {
       if (arguments.length === 0) { 
-        return (cache.cc_disabled) ? false : true;
+        return Boolean(cache.cc_disabled);
       } else {
         _setStatus({ cc_disabled: !Boolean(arguments[0]) }, plugin.settings.urls.setCaptions);
+      } 
+    };
+    
+    ip = function() {
+      if (arguments.length === 0) { 
+        return Boolean(cache.ip);
+      } else {
+        _setStatus({ reactivate: !Boolean(arguments[0]) }, _generateServerUrl());
       } 
     };
     
@@ -184,21 +193,21 @@
       plugin.settings = $.extend({}, defaults, options);
     };
     _init(); 
-    
+
     return {
       
-      // Subscribe and publish
+      // Public subscribe and publish
       subscribe : subscribeEvent,
       unsubscribe : unsubscribeEvent,
       publish : publishEvent,
       
-      // Setters and getters
+      // Public setters and getters
       status: _getStatus,
-      refresh: _refresh,
       country: country,
-      captions: captions
-      
+      captions: captions,
+      ip: ip
+
     };
   };
-
+  
 })($);

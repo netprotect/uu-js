@@ -1,3 +1,5 @@
+/* jslint vars: true, plusplus: true, devel: true */
+
 requirejs.config({
 
   baseUrl: 'src',
