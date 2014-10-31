@@ -9,9 +9,7 @@
 
     var defaults = {
       urls: { // API URLs
-        'getStatus': 'http://check.netprotect.com/get-status.js',
-        'setCountry': 'http://realcheck.unblock-us.com/set-country.php',
-        'setCaptions': 'http://check.unblock-us.com/set-captions'
+        'getStatus': 'http://check.netprotect.com/get-status.js'
       },
       timeout: 3000, // Milliseconds
       retry: 3 // How many times should retry if timeout
@@ -19,10 +17,8 @@
 
     var plugin = this,
         subscribeEvent, 
-        unsubscribeEvent, 
+        unsubscribeEvent,
         publishEvent,
-        country,
-        captions,
         ip,
         cache = null,
         handlers = {};
@@ -47,7 +43,6 @@
         data: args,
         dataType: "jsonp",
         cache: false,
-        async: false,
         timeout: plugin.settings.timeout,
         tryCount: 0,
         retryLimit: plugin.settings.retry,
@@ -63,11 +58,11 @@
         },
 
         always: function() {
-          console.log('Ajax call ended');
+          console.log('Call ended');
         },
         
         error: function (xhr, status, error) {
-          console.log('Ajax call ended with error: ' + error);
+          console.log('Call ended with error: ' + error);
           publishEvent('onFail', [xhr, status, error]); 
           if (status === 'timeout' && this.retryLimit > 0) {
             this.tryCount++;
@@ -166,22 +161,6 @@
       return true;
     };
     
-    country = function() {
-      if (arguments.length === 0) { 
-        return cache.current;
-      } else {
-        _setStatus({ code: String(arguments[0]).toUpperCase() }, plugin.settings.urls.setCountry);
-      } 
-    };
-    
-    captions = function() {
-      if (arguments.length === 0) { 
-        return Boolean(cache.cc_disabled);
-      } else {
-        _setStatus({ cc_disabled: !Boolean(arguments[0]) }, plugin.settings.urls.setCaptions);
-      } 
-    };
-    
     ip = function() {
       if (arguments.length === 0) { 
         return Boolean(cache.ip);
@@ -204,8 +183,6 @@
       
       // Public setters and getters
       status: _getStatus,
-      country: country,
-      captions: captions,
       ip: ip
 
     };
