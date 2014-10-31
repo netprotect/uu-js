@@ -55,7 +55,17 @@ module.exports = function (grunt) {
         }
       }
     },
-        
+
+    removelogging: {
+      dist: {
+        src: 'src/plugins/jquery.uu.js',
+        dest: 'web/jquery.uu.js',
+        options: {
+          replaceWith: '/* */'
+        }
+      }
+    },
+    
     watch: {
       scripts: {
         files: ['src/**/*.js'],
@@ -68,12 +78,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks("grunt-remove-logging");
   grunt.loadNpmTasks('grunt-contrib-watch');
   
   // Default
   grunt.registerTask('dev', ['jshint', 'requirejs', 'uglify:dev', 'watch']);
    
   // Default
-  grunt.registerTask('web-plugin', ['jshint', 'uglify:web']);
+  grunt.registerTask('web-plugin', ['jshint', 'removelogging', 'uglify:web']);
    
 };
