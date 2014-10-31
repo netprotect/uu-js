@@ -47,7 +47,7 @@ module.exports = function (grunt) {
           }
         },
         files: {
-          'web/jquery.uu.min.js': ['src/plugins/jquery.uu.js']
+          'build/jquery.uu.min.js': ['src/plugins/jquery.uu.js']
         }
       }
     },
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
     removelogging: {
       dist: {
         src: 'src/plugins/jquery.uu.js',
-        dest: 'web/jquery.uu.js',
+        dest: 'build/jquery.uu.js',
         options: {
           replaceWith: '/* */'
         }
