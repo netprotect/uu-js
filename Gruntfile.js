@@ -42,10 +42,6 @@ module.exports = function (grunt) {
                   ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
                   ' * Released under the <%= pkg.license %> license\n' + 
                   ' */\n\n',
-          beautify: {
-            indent_level: 2,
-            beautify: true
-          },
           compress: {
             drop_console: true
           }
