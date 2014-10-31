@@ -24,9 +24,34 @@ module.exports = function (grunt) {
     },
     
     uglify: {
+      options: {
+        mangle: false
+      },
       dev: {
         files: {
           'dev/uu.min.js': ['dev/uu.js']
+        }
+      },
+      web: {
+        options: {
+          banner: '/*!\n' +
+                  ' * jQuery <%= pkg.name %> Plugin v<%= pkg.version %>\n' +
+                  ' * \n' +
+                  ' * <%= pkg.url %>\n' +
+                  ' * \n' +
+                  ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+                  ' * Released under the <%= pkg.license %> license\n' + 
+                  ' */\n\n',
+          beautify: {
+            indent_level: 2,
+            beautify: true
+          },
+          compress: {
+            drop_console: true
+          }
+        },
+        files: {
+          'web/jquery.uu.min.js': ['src/plugins/jquery.uu.js']
         }
       }
     },
@@ -46,6 +71,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   
   // Default
-  grunt.registerTask('default', ['jshint', 'requirejs', 'uglify', 'watch']);
+  grunt.registerTask('dev', ['jshint', 'requirejs', 'uglify:dev', 'watch']);
+   
+  // Default
+  grunt.registerTask('web-plugin', ['jshint', 'uglify:web']);
    
 };

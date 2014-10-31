@@ -1,8 +1,9 @@
 {
   "name": "UU-JS",
-  "version": "0.0.1",
-  "author": "Unblock-us",
+  "version": "0.0.2",
+  "author": "NetProtect",
   "license": "MIT",
+  "url": "http://netprotect.com",
   "dependencies": {
     "requirejs": "^2.1.15"
   },
