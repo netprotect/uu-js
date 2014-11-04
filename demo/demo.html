@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>NetProtect - check status</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <!-- @end Styles -->
+
+  <style>
+    #main {
+      padding: 30px 30px 150px 30px;
+    }
+    .help {
+      cursor: pointer;
+      color: #aaa;
+    }
+    h4 {
+      margin-top: 30px;
+    }
+    hr {
+      margin: 30px 0;
+    }
+  </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+              aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://netprotect.com"><i class="fa fa-globe fa-lg"></i> NetProtect</a>
+
+      <p class="navbar-text">Check Status</p>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Demo</a></li>
+        <li><a href="http://netprotect.com" target="_blank" class="external"><i class="fa fa-external-link"></i>
+          NetProtect.com</a></li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<div id="main" class="container">
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+    
+      <p class="lead"></p>
+    
+      <form role="form">
+    
+        <div class="row">
+          <div class="col-md-10">
+            <div class="form-group">
+              <input type="email" class="form-control" id="account-email" placeholder="Enter your email">
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-default">Check status</button>
+          </div>
+        </div>
+    
+      </form>
+    
+      <hr>
+    
+      <div class="row">
+    
+        <div id="account-status" class="col-md-4">
+          <i data-container="body" data-toggle="popover" data-placement="right" data-content="Account status on our server, ie expired, active or cancelled" class="fa fa-question-circle fa-lg help"></i>
+          <label>Status:</label> 
+          <span></span>
+        </div>
+
+        <div id="account-dns" class="col-md-4">
+          <i data-container="body" data-toggle="popover" data-placement="right" data-content="Whether the device has our DNS setup correctly or not" class="fa fa-question-circle fa-lg help"></i>
+          <label>DNS:</label>
+          <span></span>
+        </div>
+        
+        <div id="account-ip" class="col-md-4">
+          <i data-container="body" data-toggle="popover" data-placement="right" data-content="Last update account IP address" class="fa fa-question-circle fa-lg help"></i>
+          <label>IP:</label>
+          <span></span>
+        </div>
+        
+      </div>
+    
+    </div>
+  </div>
+  
+  <hr>
+
+  <a href="#" class="toggle" data-target="#docs">Toggle Docs</a>
+
+  <div id="docs" class="hidden">
+
+    <h4>Step 1: Create the HTML element</h4>
+
+    <?prettify lang=html ?>
+    <pre class="prettyprint">&lt;div id=&quot;my-status&quot;&gt;&lt;/div&gt;</pre>
+
+    <h4>Step 2: Initiate the plugin</h4>
+    
+    <?prettify lang=javascript ?>
+      <pre class="prettyprint">var uuJS = new $.UUJS();</pre>
+    
+    <h4>Step 3: Subscribe the new element</h4>
+
+    <p>You can either subscribe a single event:</p>
+    
+    <?prettify lang=javascript ?>
+      <pre class="prettyprint">var handler = uuJS.subscribe('onSuccess', function(data) {
+  $('#my-status').html(data.status);
+});</pre>
+
+    <p>or an entire object with all the events:</p>
+    
+    <?prettify lang=javascript ?>
+      <pre class="prettyprint">
+var obj = {
+   
+  onStart: function () {
+    // Do something here when the check service starts
+  },
+  
+  onSuccess: function (data) {
+    // Do something here when the response is successful
+  },
+  
+  onFail: function (xhr, status, error) {  
+    // Show errors here if the response fails
+  },
+  
+  anotherMethod: function(v) {
+    // You can have more attributes or functions, the plugin will ignore them   
+  }
+        
+  // Subscribe the object        
+  uuJS.subscribe(obj);
+      
+};</pre>
+
+    <h4>Step 4: Trigger the account status call</h4>
+
+    <?prettify lang=javascript ?>
+      <pre class="prettyprint">
+uuJS.status({ email: email });</pre>
+    
+  </div>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+  <div class="container">
+    <div id="status-bar" class="navbar-text"><p>Ready</p></div>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Log <span class="caret"></span></a>
+        <ul id="log" class="dropdown-menu" role="menu">
+          <li role="presentation" class="dropdown-header">Ready</li>
+          <li class="divider"></li>
+        </ul>
+      </li>
+    </ul>
+
+    <p class="navbar-text navbar-right">v. 0.0.2</p>
+
+  </div>
+</nav>
+
+<!-- Scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
+
+<script src="../src/plugins/jquery.uu.js"></script>
+<script src="demo.js"></script>
+<!-- @end Scripts -->
+
+</body>
+</html>
