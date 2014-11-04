@@ -29,10 +29,15 @@ module.exports = function (grunt) {
       },
       dev: {
         files: {
-          'dev/uu.min.js': ['dev/uu.js']
+          'dev/uu.min.js': ['dev/uu.js'],
+          'demo/jquery.uu.js': ['dev/uu.js']
+        },
+        beautify: {
+          width: 80,
+          beautify: true
         }
       },
-      web: {
+      build: {
         options: {
           banner: '/*!\n' +
                   ' * jQuery <%= pkg.name %> Plugin v<%= pkg.version %>\n' +
@@ -80,7 +85,7 @@ module.exports = function (grunt) {
   // Default
   grunt.registerTask('dev', ['jshint', 'requirejs', 'uglify:dev', 'watch']);
    
-  // Default
-  grunt.registerTask('web-plugin', ['jshint', 'removelogging', 'uglify:web']);
+  // Build
+  grunt.registerTask('build', ['jshint', 'removelogging', 'uglify:build']);
    
 };
