@@ -110,7 +110,7 @@
 
   <a href="#" class="toggle" data-target="#docs">Toggle Docs</a>
 
-  <div id="docs" class="remove-hidden">
+  <div id="docs" class="hidden">
 
     <h2>UU.js</h2>
     
@@ -188,7 +188,8 @@ uuJS.status({ email: email });</pre>
     <p>You will get a similar response to the following one from the server:</p>
     
     <?prettify lang=javascript ?>
-      <pre class="prettyprint">{ "email":"user@email.com" , "status":"active" , "ip":"90.104.192.255" , "is_known":true , "is_active":true , "our_dns":false , "eguess":"u***@email.com" , "ip_changed":true , "reactivated":false , "secure":"0" , "accepted":true }</pre>
+      <pre class="prettyprint">{ "email":"user@email.com" , "status":"active" , "ip":"90.104.192.255" , "is_known":true , "is_active":true , 
+  "our_dns":false ,"eguess":"u***@email.com" , "ip_changed":true , "reactivated":false , "secure":"0" , "accepted":true }</pre>
 
     <p>You may also unsubscribe an element at anytime by calling the following method:</p>
 
@@ -225,13 +226,13 @@ uuJS.unsubscribe(handler);</pre>
             </thead>
             <tbody>
               <tr>
-                <td>Timeout</td>
+                <td>timeout</td>
                 <td>Number</td>
                 <td>3000</td>
                 <td>Time in milliseconds before retrying to call the end point again in case of time out</td>
               </tr>
               <tr>
-                <td>Retry</td>
+                <td>retry</td>
                 <td>Number</td>
                 <td>3</td>
                 <td>Number of times plugin should retry to call the end point in case of time out</td>
