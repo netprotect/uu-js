@@ -103,7 +103,7 @@ $(function() {
   uuJS.subscribe(statusBar);
   uuJS.subscribe(statusDetails);
   
-  var email = $('#account-email').val() || 'babak+02@selectivevpn.com'; 
+  var email = $('#account-email').val(); 
   uuJS.status({ email: email });
   
 });

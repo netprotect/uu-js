@@ -60,18 +60,16 @@
 </nav>
 
 <div id="main" class="container">
-
+  
   <div class="panel panel-default">
     <div class="panel-body">
-    
-      <p class="lead"></p>
     
       <form role="form">
     
         <div class="row">
           <div class="col-md-10">
             <div class="form-group">
-              <input type="email" class="form-control" id="account-email" placeholder="Enter your email" value="babak+02@selectivevpn.com" />
+              <input type="email" class="form-control" id="account-email" placeholder="Enter your email" value="me@email.com" />
             </div>
           </div>
           <div class="col-md-2">
@@ -113,6 +111,12 @@
   <a href="#" class="toggle" data-target="#docs">Toggle Docs</a>
 
   <div id="docs" class="remove-hidden">
+
+    <h2>UU.js</h2>
+    
+    <p>A jQuery plugin to get the status of a NetProtect user account.</p>
+    
+    <hr>
     
     <h2>Getting started</h2>
     
@@ -169,7 +173,7 @@ var obj = {
   }
         
   // Subscribe the object        
-  uuJS.subscribe(obj);
+  handler = uuJS.subscribe(obj);
       
 };</pre>
 
@@ -180,6 +184,17 @@ var obj = {
     <?prettify lang=javascript ?>
       <pre class="prettyprint">
 uuJS.status({ email: email });</pre>
+    
+    <p>You will get a similar response to the following one from the server:</p>
+    
+    <?prettify lang=javascript ?>
+      <pre class="prettyprint">{ "email":"user@email.com" , "status":"active" , "ip":"90.104.192.255" , "is_known":true , "is_active":true , "our_dns":false , "eguess":"u***@email.com" , "ip_changed":true , "reactivated":false , "secure":"0" , "accepted":true }</pre>
+
+    <p>You may also unsubscribe an element at anytime by calling the following method:</p>
+
+    <?prettify lang=javascript ?>
+      <pre class="prettyprint">
+uuJS.unsubscribe(handler);</pre>
     
     <hr>
     
