@@ -8,7 +8,7 @@
   $.UUJS = function (options) {
 
     var defaults = {
-      url: 'http://check.netprotect.com/get-status.js', // API URLs
+      url: 'http://check.netprotect.com/get-status.js', // API url
       timeout: 3000, // Milliseconds
       retry: 3 // How many times should retry if timeout
     };
@@ -172,16 +172,12 @@
     };
     _init(); 
 
+    // Public methods
     return {
-      
-      // Public subscribe and publish
       subscribe : subscribeEvent,
       unsubscribe : unsubscribeEvent,
-      
-      // Public setters and getters
       status: _getStatus,
       ip: ip
-
     };
   };
   
