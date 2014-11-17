@@ -24,6 +24,9 @@
     hr {
       margin: 30px 0;
     }
+    #status span {
+      text-transform: capitalize;
+    }
   </style>
 
 </head>
@@ -68,11 +71,11 @@
         <div class="row">
           <div class="col-md-10">
             <div class="form-group">
-              <input type="email" class="form-control" id="account-email" placeholder="Enter your email">
+              <input type="email" class="form-control" id="account-email" placeholder="Enter your email" value="babak+02@selectivevpn.com" />
             </div>
           </div>
           <div class="col-md-2">
-            <button type="submit" class="btn btn-default">Check status</button>
+            <a id="refresh-status" class="btn btn-default">Check status</a>
           </div>
         </div>
     
@@ -80,7 +83,7 @@
     
       <hr>
     
-      <div class="row">
+      <div id="status" class="row">
     
         <div id="account-status" class="col-md-4">
           <i data-container="body" data-toggle="popover" data-placement="right" data-content="Account status on our server, ie expired, active or cancelled" class="fa fa-question-circle fa-lg help"></i>
@@ -109,28 +112,41 @@
 
   <a href="#" class="toggle" data-target="#docs">Toggle Docs</a>
 
-  <div id="docs" class="hidden">
-
-    <h4>Step 1: Create the HTML element</h4>
+  <div id="docs" class="remove-hidden">
+    
+    <h2>Getting started</h2>
+    
+    <h4>1: Create the HTML element(s)</h4>
+    
+    <p>Create the placeholder elements on the page which you want to use to show the status feedback (ie account status)</p>
 
     <?prettify lang=html ?>
-    <pre class="prettyprint">&lt;div id=&quot;my-status&quot;&gt;&lt;/div&gt;</pre>
+    <pre class="prettyprint">&lt;div id=&quot;account-status&quot;&gt;&lt;/div&gt;</pre>
 
-    <h4>Step 2: Initiate the plugin</h4>
+    <h4>2: Initiate the plugin</h4>
+    
+    <p>Include the jQuery (version 1.7+) and the UU.js plugins on your page</p>
+    
+    <?prettify lang=javascript ?>
+    <?prettify lang=html ?>
+    <pre class="prettyprint">&lt;script src=&quot;//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/path/to/js-assets/jquery.uu.js&quot;&gt;&lt;/script&gt;</pre>
+    
+    <p>And initialize the plugin:</p>
     
     <?prettify lang=javascript ?>
       <pre class="prettyprint">var uuJS = new $.UUJS();</pre>
     
-    <h4>Step 3: Subscribe the new element</h4>
+    <h4>3: Subscribe the new elements</h4>
 
-    <p>You can either subscribe a single event:</p>
+    <p>You can either subscribe to a single event:</p>
     
     <?prettify lang=javascript ?>
       <pre class="prettyprint">var handler = uuJS.subscribe('onSuccess', function(data) {
-  $('#my-status').html(data.status);
+  $('#account-status').html(data.status);
 });</pre>
 
-    <p>or an entire object with all the events:</p>
+    <p>or subscribe an entire object with all the events:</p>
     
     <?prettify lang=javascript ?>
       <pre class="prettyprint">
@@ -157,11 +173,91 @@ var obj = {
       
 };</pre>
 
-    <h4>Step 4: Trigger the account status call</h4>
+    <h4>4: Trigger the account status call</h4>
+    
+    <p>Finally call the get status on the plugin and you should be able to see the result in the placeholder</p>
 
     <?prettify lang=javascript ?>
       <pre class="prettyprint">
 uuJS.status({ email: email });</pre>
+    
+    <hr>
+    
+    <h2>$().UUJS(options)</h2>
+    
+    <p>Account status jQuery plugin</p>
+    
+    <div role="tabpanel">
+    
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#options" aria-controls="options" role="tab" data-toggle="tab">Options</a></li>
+        <li role="presentation"><a href="#methods" aria-controls="methods" role="tab" data-toggle="tab">Methods</a></li>
+      </ul>
+    
+      <!-- Tab panes -->
+      <div class="tab-content">
+        
+        <div role="tabpanel" class="tab-pane active" id="options">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Timeout</td>
+                <td>Number</td>
+                <td>3000</td>
+                <td>Time in milliseconds before retrying to call the end point again in case of time out</td>
+              </tr>
+              <tr>
+                <td>Retry</td>
+                <td>Number</td>
+                <td>3</td>
+                <td>Number of times plugin should retry to call the end point in case of time out</td>
+              </tr>
+              <tr>
+                <td>url</td>
+                <td>String</td>
+                <td>http://check.netprotect.com/get-status.js</td>
+                <td>Default API end point address to get and set the account status</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div role="tabpanel" class="tab-pane" id="methods">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Parameters</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>subscribe</td>
+                <td><strong>event</strong> string | object [,<strong>callback</strong> function]</td>
+                <td>Add the function or an object to the list of subscribers to a particular event</td>
+              </tr>
+              <tr>
+                <td>unsubscribe</td>
+                <td><strong>handler</strong> object</td>
+                <td>Unsubscribe the subscriber from a particular event</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
+    
+    </div>    
     
   </div>
 
@@ -187,7 +283,7 @@ uuJS.status({ email: email });</pre>
 </nav>
 
 <!-- Scripts -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
 

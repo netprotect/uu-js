@@ -16,8 +16,8 @@ $(function() {
   
   function addLog(msg) {
     
-    if( $('#log').find('li.dropdown-header').length > logMax ) {
-       $('#log li.dropdown-header:lt(' + (logMax - 1) + ')').remove();
+    if ($('#log').find('li.dropdown-header').length > logMax) {
+      $('#log li.dropdown-header:lt(' + (logMax - 1) + ')').remove();
     }
     
     var li = $('<li/>')
@@ -40,6 +40,11 @@ $(function() {
   
   $(document).on('click', '#account-ip span a', function() {
     uuJS.ip(true);
+  });
+  
+  $(document).on('click', '#refresh-status', function() {
+    var email = $('#account-email').val(); 
+    uuJS.status({ email: email });
   });
   
   $('[data-toggle="popover"]').popover({
@@ -85,11 +90,9 @@ $(function() {
     },
     
     onSuccess: function (data) {
-      $('#account-status span').html(data.status);
-
-      $('#account-dns span').html((data.our_dns) ? 'is setup' : '<a href="http://www.netprotect.com/how-to-set-up" target="_blank" class="external">Update DNS</a>');
-
-      $('#account-ip span').html((data.ip_changed && !data.reactivated) ? '<a href="#">Update IP address</a>' : data.ip);
+      $('#account-status').find('span').html(data.status);
+      $('#account-dns').find('span').html((data.our_dns) ? 'is setup' : '<a href="http://www.netprotect.com/how-to-set-up" target="_blank" class="external">Update DNS</a>');
+      $('#account-ip').find('span').html((data.ip_changed && !data.reactivated) ? '<a href="#">Update IP address</a>' : data.ip);
     },
     
     onFail: function (xhr, status, error) {  
@@ -100,8 +103,7 @@ $(function() {
   uuJS.subscribe(statusBar);
   uuJS.subscribe(statusDetails);
   
-  var email = $('#account-email').val() || 'me@test.com'; 
-  
+  var email = $('#account-email').val() || 'babak+02@selectivevpn.com'; 
   uuJS.status({ email: email });
   
 });

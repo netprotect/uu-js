@@ -8,9 +8,7 @@
   $.UUJS = function (options) {
 
     var defaults = {
-      urls: { // API URLs
-        'getStatus': 'http://check.netprotect.com/get-status.js'
-      },
+      url: 'http://check.netprotect.com/get-status.js', // API URLs
       timeout: 3000, // Milliseconds
       retry: 3 // How many times should retry if timeout
     };
@@ -26,7 +24,7 @@
     plugin.settings = {};
     
     function _generateServerUrl() {
-      var url = plugin.settings.urls.getStatus;
+      var url = plugin.settings.url;
       var cacheIndex = 7;
 
       if (location.protocol === 'https:') {
@@ -179,7 +177,6 @@
       // Public subscribe and publish
       subscribe : subscribeEvent,
       unsubscribe : unsubscribeEvent,
-      publish : publishEvent,
       
       // Public setters and getters
       status: _getStatus,
