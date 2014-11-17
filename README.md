@@ -1,4 +1,4 @@
 uu-js
 =====
 
-JQuery plugin for check DNS settings, IP and account status, changing country etc
+JQuery plugin for check DNS settings, IP and account status
