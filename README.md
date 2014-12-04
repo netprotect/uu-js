@@ -82,7 +82,9 @@ You will get a similar response to the following one from the server:
 
 You may also unsubscribe an element at anytime by calling the following method:
 
+```javascript
 uuJS.unsubscribe(handler);
+```
 
 ---
 
