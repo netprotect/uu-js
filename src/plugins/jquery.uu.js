@@ -10,7 +10,8 @@
     var defaults = {
       url: 'http://check.netprotect.com/get-status.js', // API url
       timeout: 3000, // Milliseconds
-      retry: 3 // How many times should retry if timeout
+      retry: 3, // How many times should retry if timeout
+      key: '' // Affiliate's key
     };
 
     var plugin = this,
@@ -35,6 +36,12 @@
 
     function _getStatus(args) {
       var call;
+      
+      if (plugin.settings.key === '') {
+        throw new Error('Missing key');
+      } else {
+        $.extend(args, { key: plugin.settings.key });
+      }
       
       call = $.ajax({
         url: _generateServerUrl(),

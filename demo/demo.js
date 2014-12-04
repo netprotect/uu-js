@@ -5,7 +5,7 @@
 $(function() {
   'use strict';
   
-  var uuJS = new $.UUJS();
+  var uuJS = new $.UUJS({ key: 'l78g15da66' });
     
   /***************************
    * UI and misc. functions
