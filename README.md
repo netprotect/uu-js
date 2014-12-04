@@ -12,7 +12,7 @@ Create the placeholder elements on the page which you want to use to show the st
 <div id="account-status"></div>
 ```
 
-#####2: Initiate the plugin
+######2: Initiate the plugin
 
 Include the jQuery (version 1.7+) and the UU.js plugins on your page
 
@@ -29,7 +29,7 @@ var uuJS = new $.UUJS({ key: 'xxxxxxxxx' });
 
 Whereas _xxxxxxxxx_ is your afflilate's key 
 
-#####3: Subscribe the new elements
+######3: Subscribe the new elements
 
 You can either subscribe to a single event:
 
@@ -66,7 +66,7 @@ var obj = {
 };
 ```
 
-##### 4: Trigger the account status call
+###### 4: Trigger the account status call
 
 Finally call the get status on the plugin and you should be able to see the result in the placeholder
 
@@ -85,3 +85,21 @@ You may also unsubscribe an element at anytime by calling the following method:
 uuJS.unsubscribe(handler);
 
 ---
+
+####$().UUJS(options)
+
+**Options**
+
+ Name |	Type | Default | Description
+------|------|---------|------------
+timeout | Number | 3000 | Time in milliseconds before retrying to call the end point again in case of time out
+retry | Number | 3 | Number of times plugin should retry to call the end point in case of time out
+url | String | http://check.netprotect.com/get-status.js | Default API end point address to get and set the account status
+key | String | (empty) | Affiliate's key to be set for the plugin to work
+
+**Methods**
+
+Method | Parameters | Description
+-------|------------|------------
+subscribe | **event** string &#124; object [,**callback** function] | Add the function or an object to the list of subscribers to a particular event
+unsubscribe | **handler** object | Unsubscribe the subscriber from a particular event
