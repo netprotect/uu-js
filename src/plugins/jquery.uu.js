@@ -170,7 +170,7 @@
       if (arguments.length === 0) { 
         return Boolean(cache.ip);
       } else {
-        _setStatus({ reactivate: !Boolean(arguments[0]) }, _generateServerUrl());
+        _setStatus({ reactivate: 1 }, _generateServerUrl());
       } 
     };
     
