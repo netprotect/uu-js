@@ -1,10 +1,10 @@
-##UU.js
+## UU.js
 
 A jQuery plugin to get the status of a NetProtect user account.
 
-####Getting started
+#### Getting started
 
-######1: Create the HTML element(s)
+###### 1: Create the HTML element(s)
 
 Create the placeholder elements on the page which you want to use to show the status feedback (ie account status)
 
@@ -12,7 +12,7 @@ Create the placeholder elements on the page which you want to use to show the st
 <div id="account-status"></div>
 ```
 
-######2: Initiate the plugin
+###### 2: Initiate the plugin
 
 Include the jQuery (version 1.7+) and the UU.js plugins on your page
 
@@ -29,7 +29,7 @@ var uuJS = new $.UUJS({ key: 'xxxxxxxxx' });
 
 Whereas _xxxxxxxxx_ is your afflilate's key 
 
-######3: Subscribe the new elements
+###### 3: Subscribe the new elements
 
 You can either subscribe to a single event:
 
@@ -88,7 +88,7 @@ uuJS.unsubscribe(handler);
 
 ---
 
-####$().UUJS(options)
+#### $().UUJS(options)
 
 **Options**
 
