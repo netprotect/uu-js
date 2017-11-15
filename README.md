@@ -105,3 +105,15 @@ Method | Parameters | Description
 -------|------------|------------
 subscribe | **event** string &#124; object [,**callback** function] | Add the function or an object to the list of subscribers to a particular event
 unsubscribe | **handler** object | Unsubscribe the subscriber from a particular event
+
+---
+
+#### Build
+
+In order to build this plugin:
+
+1) Make sure Grunt is installed `npm install grunt --save-dev`
+2) Install dependant modules `npm install`
+3) Build with `grunt build`
+
+You should be able to see two versions (uncompressed and minified) in the 'build' folder.
