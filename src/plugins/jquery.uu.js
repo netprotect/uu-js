@@ -23,7 +23,8 @@
         handlers = {};
     
     plugin.settings = {};
-    
+
+    // Deprecated - forcing https to prevent caching
     function _generateServerUrl() {
       var url = plugin.settings.url;
       var cacheIndex = 7;
@@ -44,7 +45,7 @@
       }
       
       call = $.ajax({
-        url: _generateServerUrl(),
+        url: plugin.settings.url,
         data: args,
         dataType: "jsonp",
         cache: false,
