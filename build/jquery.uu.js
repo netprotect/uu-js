@@ -27,6 +27,8 @@
     // Deprecated - forcing https to prevent caching
     function _generateServerUrl() {
       var url = plugin.settings.url;
+      return url;
+
       var cacheIndex = 7;
 
       if (location.protocol === 'https:') {
@@ -45,7 +47,7 @@
       }
       
       call = $.ajax({
-        url: plugin.settings.url,
+        url: _generateServerUrl(),
         data: args,
         dataType: "jsonp",
         cache: false,
