@@ -8,7 +8,7 @@
   $.UUJS = function (options) {
 
     var defaults = {
-      url: '//dragon-check.unblock-us.com/get-status.js', // API url
+      url: 'https://dragon-check.unblock-us.com/get-status.js', // API url
       timeout: 3000, // Milliseconds
       retry: 3, // How many times should retry if timeout
       key: '' // Affiliate's key
