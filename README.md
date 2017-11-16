@@ -96,7 +96,7 @@ uuJS.unsubscribe(handler);
 ------|------|---------|------------
 timeout | Number | 3000 | Time in milliseconds before retrying to call the end point again in case of time out
 retry | Number | 3 | Number of times plugin should retry to call the end point in case of time out
-url | String | //dragon-check.unblock-us.com/get-status.js | Default API end point address to get and set the account status
+url | String | https://dragon-check.unblock-us.com/get-status.js | Default API end point address to get and set the account status
 key | String | (empty) | Affiliate's key to be set for the plugin to work
 
 **Methods**
