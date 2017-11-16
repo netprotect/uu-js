@@ -26,13 +26,13 @@
 
     // Deprecated - forcing https to prevent caching
     function _generateServerUrl() {
-      var url = plugin.settings.url;
-      var cacheIndex = 7;
-
-      if (location.protocol === 'https:') {
-        return url.replace(/^http:\/\//i, 'https://');
-      } 
-      return url.slice(0, cacheIndex) + "c" + Math.floor(( Math.random() * 1000000) + 1) + "." + url.slice(cacheIndex);
+      return plugin.settings.url;
+      //var cacheIndex = 7;
+      //
+      //if (location.protocol === 'https:') {
+      //  return url.replace(/^http:\/\//i, 'https://');
+      //}
+      //return url.slice(0, cacheIndex) + "c" + Math.floor(( Math.random() * 1000000) + 1) + "." + url.slice(cacheIndex);
     }
 
     function _getStatus(args) {
@@ -45,7 +45,7 @@
       }
       
       call = $.ajax({
-        url: plugin.settings.url,
+        url: _generateServerUrl(),
         data: args,
         dataType: "jsonp",
         cache: false,
