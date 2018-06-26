@@ -11,7 +11,8 @@
       url: 'https://dragon-check.unblock-us.com/get-status.js', // API url
       timeout: 3000, // Milliseconds
       retry: 3, // How many times should retry if timeout
-      key: '' // Affiliate's key
+      key: '', // Affiliate's key
+      reseller_id: '' // Affiliate's id
     };
 
     var plugin = this,
@@ -24,29 +25,33 @@
     
     plugin.settings = {};
 
-    // Deprecated - forcing https to prevent caching
-    function _generateServerUrl() {
-      return plugin.settings.url;
-      //var cacheIndex = 7;
-      //
-      //if (location.protocol === 'https:') {
-      //  return url.replace(/^http:\/\//i, 'https://');
-      //}
-      //return url.slice(0, cacheIndex) + "c" + Math.floor(( Math.random() * 1000000) + 1) + "." + url.slice(cacheIndex);
+    function _defaultArgs(args) {
+      var merged = {};
+      if (plugin.settings.key === '') {
+        throw new Error('Missing key');
+      } else {
+        $.extend(merged, { key: plugin.settings.key });
+      }
+      if (plugin.settings.reseller_id) {
+        $.extend(merged, { reseller_id: plugin.settings.reseller_id });
+      }
+      if (cache) {
+        $.each(["ip", "account_id", "email"], function(n, idx) {
+          if (cache[idx]) {
+            merged[idx] = cache[idx];
+          }
+        });
+      }
+      $.extend(merged, args);
+      return merged;
     }
 
     function _getStatus(args) {
       var call;
       
-      if (plugin.settings.key === '') {
-        throw new Error('Missing key');
-      } else {
-        $.extend(args, { key: plugin.settings.key });
-      }
-      
       call = $.ajax({
-        url: _generateServerUrl(),
-        data: args,
+        url: plugin.settings.url,
+        data: _defaultArgs(args),
         dataType: "jsonp",
         cache: false,
         timeout: plugin.settings.timeout,
@@ -89,7 +94,7 @@
       
       call = $.ajax({
         url: url,
-        data: args,
+        data: _defaultArgs(args),
         async: false,
         dataType: "jsonp",
         
@@ -171,7 +176,7 @@
       if (arguments.length === 0) { 
         return Boolean(cache.ip);
       } else {
-        _setStatus({ reactivate: 1 }, _generateServerUrl());
+        _setStatus({ reactivate: 1 }, plugin.settings.url);
       } 
     };
     
